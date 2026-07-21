@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Trò chuyện cùng Gigi — Gotcha · UNICOACH</title>
+<meta name="description" content="Luyện nói tiếng Anh không áp lực cùng Gigi — người bạn đồng hành AI. Trò chuyện, nhận góp ý nhẹ nhàng, giữ streak mỗi ngày.">
+<meta name="theme-color" content="#11183A">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Black.woff2') format('woff2');font-weight:900;font-style:normal;font-display:swap;}
+:root{
+  --sapphire:#11183A;--sapphire-deep:#0A0E24;--oxblood:#5A1726;--oxblood-deep:#3A0E18;
+  --emerald:#123F33;--gold:#C8A14B;--gold-light:#E7CE8E;--gold-dark:#8A6A28;
+  --parchment:#F4ECD8;--parchment2:#E9DCBE;--ivory:#FBF7EE;--ink:#241B10;
+  --foil:linear-gradient(135deg,#8A6A28,#E7CE8E 26%,#C8A14B 48%,#F4E7BC 66%,#A9863A 86%,#8A6A28);
+  --fd:'Trajan Pro','Cormorant Garamond',serif;--fh:'Trajan Pro','Cormorant Garamond',serif;--fs:'Cormorant Garamond',serif;--fb:'EB Garamond',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--fb);background:var(--ivory);color:var(--ink);line-height:1.5;display:flex;flex-direction:column}
+header{background:var(--sapphire);border-bottom:2px solid var(--gold-dark);padding:10px 16px;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.crest{height:36px}
+.wm{font-family:var(--fd);font-weight:900;font-size:1.25rem;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.06em}
+.motto{font-family:var(--fs);font-style:italic;color:var(--gold-light);font-size:.72rem;opacity:.85}
+.spacer{flex:1}
+header a{font-family:var(--fh);font-weight:600;font-size:.68rem;color:var(--gold-light);margin-right:10px;text-decoration:none}
+.hbtn{font-family:var(--fh);font-weight:600;font-size:.66rem;letter-spacing:.04em;background:var(--sapphire-deep);color:var(--gold-light);border:1px solid var(--gold-dark);border-radius:6px;padding:6px 9px;cursor:pointer;margin-left:6px}
+.hbtn.on{background:var(--emerald);color:var(--gold-light)}
+main{flex:1;display:flex;flex-direction:column;max-width:680px;width:100%;margin:0 auto;min-height:0}
+#thread{flex:1;overflow-y:auto;padding:18px 14px 10px}
+.row{display:flex;gap:8px;margin-bottom:12px;align-items:flex-end}
+.row.you{justify-content:flex-end}
+.ava{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--emerald);color:var(--gold-light);font-family:var(--fh);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.bub{max-width:78%;padding:11px 14px;border-radius:16px;font-size:1rem}
+.row.gigi .bub{background:#fff;border:1px solid var(--gold-dark);border-bottom-left-radius:4px}
+.row.you .bub{background:var(--sapphire);color:var(--parchment);border-bottom-right-radius:4px}
+.bub .en{color:var(--ink)}
+.bub .vi{font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.9rem;margin-top:3px}
+body.no-vi .vi,body.no-vi .tipvi{display:none}
+.bub .tip{margin-top:9px;padding-top:9px;border-top:1px dashed var(--gold);font-size:.92rem;color:var(--oxblood)}
+.bub .tip b{font-family:var(--fh);font-weight:600}
+.tipvi{display:block;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.86rem;margin-top:2px}
+.mline{margin-top:7px;font-size:.78rem;color:var(--gold-dark);letter-spacing:.02em}
+.bub.typing{display:flex;gap:4px;align-items:center}
+.bub.typing span{width:7px;height:7px;border-radius:50%;background:var(--gold-dark);opacity:.5;animation:blink 1.2s infinite}
+.bub.typing span:nth-child(2){animation-delay:.2s}.bub.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.3}30%{opacity:1}}
+.bub.summary .stats{display:flex;gap:14px;margin:8px 0}
+.bub.summary .stats b{font-family:var(--fh);font-weight:700;color:var(--sapphire);font-size:1.15rem}
+.bub.summary .stats span{font-size:.72rem;color:var(--gold-dark);display:flex;flex-direction:column}
+.wrapbtns{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+#bar{flex:0 0 auto;padding:12px 14px 16px;border-top:1px solid var(--parchment2);background:var(--parchment)}
+.mic{display:block;width:100%;font-family:var(--fh);font-weight:700;font-size:.95rem;letter-spacing:.04em;background:var(--foil);color:var(--sapphire);border:1px solid var(--gold-dark);border-radius:30px;padding:15px;cursor:pointer}
+.mic[data-state=recording]{background:var(--oxblood);color:var(--gold-light);animation:pulse 1.3s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(90,23,38,.5)}70%{box-shadow:0 0 0 16px rgba(90,23,38,0)}100%{box-shadow:0 0 0 0 rgba(90,23,38,0)}}
+.softtimer{text-align:center;font-family:var(--fh);color:var(--oxblood);font-size:.85rem;min-height:1em;margin-top:6px}
+.liveg{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.95rem;min-height:1.2em;margin-top:4px}
+.endchat{display:block;margin:8px auto 0;font-family:var(--fh);font-weight:600;font-size:.75rem;background:transparent;border:none;color:var(--gold-dark);text-decoration:underline;cursor:pointer}
+.btn-primary{display:block;width:100%;font-family:var(--fh);font-weight:700;font-size:.9rem;letter-spacing:.04em;background:var(--foil);color:var(--sapphire);border:1px solid var(--gold-dark);border-radius:10px;padding:13px;cursor:pointer;text-align:center;text-decoration:none}
+.btn-ghost{display:block;width:100%;font-family:var(--fh);font-weight:600;font-size:.8rem;letter-spacing:.04em;background:transparent;border:1px solid var(--oxblood);color:var(--oxblood);border-radius:9px;padding:11px;cursor:pointer;text-align:center;text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <img class="crest" src="assets/crest.svg" alt="UNICOACH" onerror="this.style.display='none'">
+  <div>
+    <div class="wm">GOTCHA</div>
+    <div class="motto">Trò chuyện cùng Gigi 🌿</div>
+  </div>
+  <div class="spacer"></div>
+  <a href="/">← Trang chủ</a>
+  <button class="hbtn" id="metBtn">Chỉ số: TẮT</button>
+  <button class="hbtn" id="langBtn">VI ✓</button>
+</header>
+<main>
+  <div id="thread"></div>
+  <div id="bar"></div>
+</main>
+<script src="gigi.js"></script>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
