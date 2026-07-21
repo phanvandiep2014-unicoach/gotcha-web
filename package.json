@@ -1,0 +1,11 @@
+{
+  "name": "gotcha-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Gotcha static web + serverless API (auth, sync, teacher share).",
+  "dependencies": {
+    "google-auth-library": "^9.14.1",
+    "pg": "^8.12.0"
+  }
+}
