@@ -112,6 +112,15 @@ footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gol
 .estrow.muted{opacity:.85}
 .estnote{font-size:.82rem;color:var(--gold-dark);margin-top:12px;line-height:1.5;font-style:normal}
 .estnote b{color:var(--oxblood)}
+
+/* Duke speaking (examiner reads aloud) */
+.dukechip{display:flex;align-items:center;gap:8px;justify-content:center;font-family:var(--fh);font-weight:600;font-size:.85rem;color:var(--sapphire);background:var(--parchment);border:1px solid var(--gold-dark);border-radius:20px;padding:8px 14px;margin:12px auto 4px;max-width:360px}
+.wave{display:inline-flex;gap:3px;align-items:flex-end;height:16px}
+.wave i{width:3px;height:6px;background:var(--gold-dark);border-radius:2px;animation:wv 1s infinite ease-in-out}
+.wave i:nth-child(2){animation-delay:.2s}.wave i:nth-child(3){animation-delay:.4s}
+@keyframes wv{0%,100%{height:5px}50%{height:15px}}
+.link-skip{display:block;margin:8px auto 0;font-family:var(--fh);font-weight:600;font-size:.75rem;background:transparent;border:none;color:var(--gold-dark);text-decoration:underline;cursor:pointer}
+.recBtn[data-state=asking]{background:var(--parchment2);color:var(--gold-dark);border-color:var(--gold-dark);cursor:default;animation:none}
 </style>
 </head>
 <body>
