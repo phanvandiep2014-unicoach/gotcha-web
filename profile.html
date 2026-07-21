@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hồ sơ người học — Gotcha · UNICOACH</title>
+<meta name="description" content="Hồ sơ người học Gotcha: đăng nhập Google, theo dõi band ước tính, streak, huy hiệu, điểm cần cải thiện — chia sẻ được cho giáo viên.">
+<meta name="theme-color" content="#11183A">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<!-- ▼▼ PASTE YOUR GOOGLE OAUTH CLIENT ID HERE (see auth.ts setup notes) ▼▼ -->
+<script>window.GOTCHA_GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";</script>
+<style>
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+:root{
+  --sapphire:#11183A;--sapphire-deep:#0A0E24;--oxblood:#5A1726;--oxblood-deep:#3A0E18;
+  --emerald:#123F33;--gold:#C8A14B;--gold-light:#E7CE8E;--gold-dark:#8A6A28;
+  --parchment:#F4ECD8;--parchment2:#E9DCBE;--ivory:#FBF7EE;--ink:#241B10;
+  --foil:linear-gradient(135deg,#8A6A28,#E7CE8E 26%,#C8A14B 48%,#F4E7BC 66%,#A9863A 86%,#8A6A28);
+  --fd:'Trajan Pro','Cormorant Garamond',serif;--fh:'Trajan Pro','Cormorant Garamond',serif;--fs:'Cormorant Garamond',serif;--fb:'EB Garamond',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--fb);background:var(--ivory);color:var(--ink);line-height:1.5}
+header{background:var(--sapphire);border-bottom:2px solid var(--gold-dark);padding:12px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.crest{height:40px}
+.wm{font-family:var(--fd);font-weight:700;font-size:1.4rem;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.06em}
+.motto{font-family:var(--fs);font-style:italic;color:var(--gold-light);font-size:.8rem;opacity:.85}
+.spacer{flex:1}
+header a{font-family:var(--fh);font-weight:600;font-size:.72rem;color:var(--gold-light);margin-right:12px;text-decoration:none}
+main{max-width:680px;margin:0 auto;padding:18px 16px 60px}
+.pcard{background:#fff;border:1px solid var(--gold-dark);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 6px 22px rgba(17,24,58,.05)}
+.pcard.muted{background:var(--parchment)}
+.lbl{font-family:var(--fh);font-weight:600;font-size:.7rem;letter-spacing:.14em;color:var(--oxblood);margin-bottom:8px}
+.hero{background:linear-gradient(180deg,#fff,var(--parchment))}
+.idrow{display:flex;gap:14px;align-items:center}
+.pava{flex:0 0 auto;width:64px;height:64px;border-radius:50%;background:var(--sapphire);color:var(--gold-light);border:2px solid var(--gold);font-family:var(--fh);font-weight:700;font-size:1.6rem;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pava img{width:100%;height:100%;object-fit:cover}
+.idmeta{flex:1;min-width:0}
+.nameedit{font-family:var(--fh);font-weight:700;font-size:1.4rem;color:var(--sapphire);border:none;background:transparent;width:100%;border-bottom:1px dashed transparent}
+.nameedit:focus{outline:none;border-bottom-color:var(--gold-dark)}
+.idmeta .sub{font-size:.85rem;color:var(--gold-dark);margin:2px 0 6px}
+.targetrow{font-size:.9rem;color:var(--ink)}
+.targetrow select{font-family:var(--fh);font-weight:600;border:1px solid var(--gold-dark);border-radius:6px;padding:3px 6px;background:var(--ivory);color:var(--sapphire);margin-left:4px}
+.savedmsg,#savedMsg{color:var(--emerald);font-size:.8rem;margin-left:8px}
+.authrow{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--parchment2);flex-wrap:wrap}
+.authrow.signed .gmeta{flex:1}
+.gava{width:40px;height:40px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold)}
+.gava.init{background:var(--emerald);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:700}
+.gmeta{display:flex;flex-direction:column;line-height:1.2}.gmeta b{color:var(--sapphire)}.gmeta span{font-size:.8rem;color:var(--gold-dark)}
+.gnote{font-size:.85rem}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:420px){.statgrid{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--parchment);border:1px solid var(--gold-dark);border-radius:10px;padding:12px 6px;text-align:center}
+.stat b{font-family:var(--fh);font-weight:700;font-size:1.5rem;color:var(--sapphire);display:block}
+.stat span{font-size:.72rem;color:var(--gold-dark)}
+.bandrow{display:flex;align-items:baseline;gap:12px}
+.bandbig{font-family:var(--fh);font-weight:700;font-size:2rem;color:var(--oxblood)}
+.bandmeta{font-size:.82rem;color:var(--gold-dark)}
+.critmini{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.cm{display:flex;align-items:center;gap:8px;font-size:.85rem}
+.cm span{flex:0 0 38%;color:var(--ink)}
+.cm .cmbar{flex:1;height:12px;background:var(--parchment2);border:1px solid var(--gold-dark);border-radius:6px;overflow:hidden}
+.cm .cmbar div{height:100%;background:var(--foil)}
+.cm b{font-family:var(--fh);font-weight:700;color:var(--sapphire);min-width:30px;text-align:right}
+.badgeStrip{display:flex;flex-wrap:wrap;gap:10px}
+.bdg{display:flex;flex-direction:column;align-items:center;width:62px;text-align:center;font-size:1.4rem;gap:2px}
+.bdg span{font-family:var(--fb);font-size:.58rem;color:var(--gold-dark);line-height:1.1}
+.bdg.off{filter:grayscale(1);opacity:.35}
+.flist{list-style:none}
+.flist li{padding:8px 0;border-bottom:1px solid var(--parchment2);font-size:.92rem}
+.flist li b{color:var(--sapphire)}
+.flist li span{color:var(--gold-dark);font-style:italic}
+.flist li em{float:right;color:var(--oxblood);font-style:normal;font-size:.82rem}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{background:var(--sapphire);color:var(--gold-light);font-family:var(--fh);font-weight:600;font-size:.78rem;padding:4px 11px;border-radius:14px}
+.pmsg{font-size:.92rem;margin-top:6px}.pmsg a{color:var(--oxblood);font-weight:700}
+.dim{color:var(--gold-dark)}
+.actions{margin-top:6px}
+.btn-primary{display:block;width:100%;font-family:var(--fh);font-weight:700;font-size:.92rem;letter-spacing:.04em;background:var(--foil);color:var(--sapphire);border:1px solid var(--gold-dark);border-radius:10px;padding:14px;cursor:pointer;text-align:center}
+.navrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btn-ghost{flex:1;min-width:150px;font-family:var(--fh);font-weight:600;font-size:.8rem;background:transparent;border:1px solid var(--oxblood);color:var(--oxblood);border-radius:9px;padding:11px;cursor:pointer;text-align:center;text-decoration:none}
+.btn-ghost.sm{flex:0;padding:7px 12px;font-size:.75rem}
+.foot{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.82rem;margin-top:16px}
+</style>
+</head>
+<body>
+<header>
+  <img class="crest" src="assets/crest.svg" alt="UNICOACH" onerror="this.style.display='none'">
+  <div>
+    <div class="wm">GOTCHA</div>
+    <div class="motto">Hồ sơ người học 👑</div>
+  </div>
+  <div class="spacer"></div>
+  <a href="/">← Trang chủ</a>
+</header>
+<main>
+  <div id="app"></div>
+</main>
+<script src="profile.js"></script>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
