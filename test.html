@@ -94,6 +94,24 @@ h3 .dim{font-family:var(--fb);font-size:.75rem;font-weight:400}
 .actions{display:flex;flex-direction:column;gap:0;margin-top:8px}
 .err{background:#fdefe0;border:1px solid var(--oxblood);border-radius:10px;padding:14px;color:var(--oxblood)}
 footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.85rem;padding:20px}
+
+/* estimated band */
+.estimate{background:linear-gradient(180deg,#fff,var(--parchment));border:1px solid var(--gold);border-radius:14px;padding:16px 16px 14px;margin:14px 0}
+.estimate .lbl{color:var(--oxblood)}
+.estbig{font-family:var(--fh);font-weight:900;font-size:2.6rem;color:var(--sapphire);text-align:center;letter-spacing:.02em;margin:4px 0 0}
+.estbig span{color:var(--gold-dark);margin:0 6px;font-weight:600}
+.estsub{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.95rem;margin-bottom:12px}
+.estrow{display:flex;align-items:center;gap:10px;margin:7px 0}
+.estlab{flex:0 0 40%;font-size:.86rem;color:var(--ink)}
+.estlab .en2{margin-top:0;font-size:.72rem}
+.estbar{flex:1;position:relative;height:20px;background:var(--parchment2);border:1px solid var(--gold-dark);border-radius:10px;overflow:hidden}
+.estbar>div{height:100%;background:var(--foil)}
+.estbar>span{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--fh);font-weight:700;font-size:.8rem;color:var(--sapphire)}
+.estbar.none{background:repeating-linear-gradient(45deg,var(--parchment2),var(--parchment2) 6px,#f2e7c8 6px,#f2e7c8 12px)}
+.estbar.none span{position:static;display:block;text-align:center;line-height:20px;color:var(--gold-dark);font-family:var(--fs);font-style:italic;font-weight:400;font-size:.75rem}
+.estrow.muted{opacity:.85}
+.estnote{font-size:.82rem;color:var(--gold-dark);margin-top:12px;line-height:1.5;font-style:normal}
+.estnote b{color:var(--oxblood)}
 </style>
 </head>
 <body>
