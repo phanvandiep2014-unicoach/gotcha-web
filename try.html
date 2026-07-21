@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Gotcha — Luyện nói IELTS cùng AI · UNICOACH</title>
+<meta name="description" content="Ghi âm 60 giây, nhận phản hồi song ngữ về từ vựng, ngữ pháp và nhịp nói — miễn phí. Bắt đầu từ bạn, cùng nhau vươn tới đỉnh cao.">
+<meta name="theme-color" content="#11183A">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root{
+  --sapphire:#11183A;--sapphire-deep:#0A0E24;--oxblood:#5A1726;--oxblood-deep:#3A0E18;
+  --emerald:#123F33;--gold:#C8A14B;--gold-light:#E7CE8E;--gold-dark:#8A6A28;
+  --parchment:#F4ECD8;--parchment2:#E9DCBE;--ivory:#FBF7EE;--ink:#241B10;
+  --foil:linear-gradient(135deg,#8A6A28,#E7CE8E 26%,#C8A14B 48%,#F4E7BC 66%,#A9863A 86%,#8A6A28);
+  --fd:'Cinzel Decorative',serif;--fh:'Cinzel',serif;--fs:'Cormorant Garamond',serif;--fb:'EB Garamond',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--fb);background:var(--ivory);color:var(--ink);line-height:1.5}
+header{background:var(--sapphire);border-bottom:2px solid var(--gold-dark);padding:12px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.crest{height:40px}
+.wm{font-family:var(--fd);font-size:1.4rem;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.06em}
+.motto{font-family:var(--fs);font-style:italic;color:var(--gold-light);font-size:.8rem;opacity:.85}
+.spacer{flex:1}
+#langBtn{font-family:var(--fh);font-size:.72rem;letter-spacing:.05em;background:var(--sapphire-deep);color:var(--gold-light);border:1px solid var(--gold-dark);border-radius:6px;padding:6px 10px;cursor:pointer}
+main{max-width:680px;margin:0 auto;padding:20px 16px 60px}
+.cueCard{background:var(--ivory);border:1px dashed var(--gold-dark);border-radius:12px;padding:16px}
+.cueCard .lbl{font-family:var(--fh);font-size:.7rem;letter-spacing:.1em;color:var(--oxblood)}
+#cue{font-size:1.1rem;margin-top:6px}
+#hint{font-family:var(--fs);font-style:italic;color:var(--gold-dark);margin-top:8px;font-size:.95rem}
+.rec{text-align:center;margin:22px 0}
+#recBtn{width:120px;height:120px;border-radius:50%;border:4px solid var(--gold);background:var(--oxblood);color:var(--gold-light);font-family:var(--fh);font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:.2s}
+#recBtn[data-state=recording]{background:var(--oxblood-deep);animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(90,23,38,.5)}70%{box-shadow:0 0 0 20px rgba(90,23,38,0)}100%{box-shadow:0 0 0 0 rgba(90,23,38,0)}}
+#timer{font-family:var(--fh);font-size:1.8rem;color:var(--oxblood);margin-top:10px}
+.track{height:6px;background:var(--parchment2);border-radius:3px;overflow:hidden;margin:10px auto;max-width:280px}
+#bar{height:100%;width:0;background:var(--gold);transition:width 1s linear}
+.progress{background:var(--parchment);border:1px solid var(--gold);border-radius:12px;padding:14px 16px;margin:18px 0}
+.progress h3{font-family:var(--fh);font-size:1rem;color:var(--sapphire);margin-bottom:8px}
+.progress .dim{font-family:var(--fb);font-weight:400;color:var(--gold-dark);font-size:.8rem}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.badge{font-family:var(--fh);font-size:.68rem;letter-spacing:.03em;background:var(--sapphire);color:var(--gold-light);padding:4px 10px;border-radius:10px}
+.pmsg{font-size:.95rem;margin:6px 0}
+.spark{margin:8px 0}
+#live{min-height:1.4em;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:1rem;margin-top:8px}
+.metrics{display:flex;gap:10px;margin:6px 0 14px}
+.metrics .m{flex:1;text-align:center;background:var(--parchment);border:1px solid var(--gold-dark);border-radius:10px;padding:10px 4px}
+.metrics .m b{font-family:var(--fh);font-size:1.5rem;color:var(--sapphire);display:block}
+.metrics .m span{font-size:.72rem;color:var(--gold-dark)}
+h3{font-family:var(--fh);font-size:1rem;color:var(--oxblood);margin:18px 0 8px;letter-spacing:.03em}
+h3 .dim{font-family:var(--fb);font-size:.75rem;color:var(--gold-dark);font-weight:400}
+.fb{list-style:none}
+.fb li{background:var(--ivory);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:9px}
+.fb li.on_target{border-left-color:var(--emerald)}
+.fb li.improving{border-left-color:var(--gold)}
+.fb li.focus{border-left-color:var(--oxblood)}
+.fb .i{font-size:.8rem;margin-right:6px}
+.fb .en{display:inline}
+.fb .vi{font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.92rem;margin-top:2px}
+body.no-vi .vi{display:none}
+.tag{font-family:var(--fh);font-size:.6rem;letter-spacing:.05em;background:var(--sapphire);color:var(--gold-light);padding:2px 7px;border-radius:4px;margin-right:6px}
+.transcript{background:var(--parchment);border-radius:10px;padding:12px 14px;font-size:1rem;line-height:1.9}
+.disclaimer{font-size:.82rem;color:var(--gold-dark);font-style:italic;margin-top:16px;font-family:var(--fs)}
+.dim{color:var(--gold-dark);opacity:.85}
+.err{background:#fdefe0;border:1px solid var(--oxblood);border-radius:10px;padding:14px;color:var(--oxblood)}
+.link,.newp{font-family:var(--fh);font-size:.78rem;letter-spacing:.05em;background:transparent;border:1px solid var(--oxblood);color:var(--oxblood);border-radius:8px;padding:9px 16px;cursor:pointer;margin-top:16px}
+footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.85rem;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <img class="crest" src="assets/crest.svg" alt="UNICOACH" onerror="this.style.display='none'">
+  <div>
+    <div class="wm">GOTCHA</div>
+    <div class="motto">Per te, ad astra — by UNICOACH</div>
+  </div>
+  <div class="spacer"></div>
+  <a href="/" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">← Trang chủ</a><button id="langBtn">VI ✓</button>
+</header>
+<main>
+  <div class="cueCard">
+    <div class="lbl">ĐỀ NÓI · CUE CARD</div>
+    <div id="cue"></div>
+    <div id="hint"></div>
+  </div>
+  <div class="rec">
+    <button id="recBtn" data-state="idle">RECORD</button>
+    <div id="timer">60</div>
+    <div class="track"><div id="bar"></div></div>
+    <div id="live"></div>
+  </div>
+  <div id="report"></div>
+</main>
+<footer>“Per te, ad astra” — bắt đầu từ bạn, cùng nhau vươn tới đỉnh cao · © 2026 UNICOACH</footer>
+<script src="app.js"></script>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
