@@ -7,8 +7,11 @@
 <meta name="description" content="Hồ sơ người học Precisely: đăng nhập Google, theo dõi band ước tính, streak, huy hiệu, điểm cần cải thiện — chia sẻ được cho giáo viên.">
 <meta name="theme-color" content="#11183A">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
-<!-- ▼▼ PASTE YOUR GOOGLE OAUTH CLIENT ID HERE (see auth.ts setup notes) ▼▼ -->
-<script>window.PRECISELY_GOOGLE_CLIENT_ID = "76480342321-b2s9g70uk51nnfi7h8lhnjrpco4sfleq.apps.googleusercontent.com";</script>
+<!-- Google OAuth Client ID (dùng chung với LMS và WriteRight).
+     LƯU Ý: bundle profile.js đọc biến GOTCHA_GOOGLE_CLIENT_ID (tên cũ trước khi đổi
+     Gotcha → Precisely). Đặt CẢ HAI tên, nếu không nút "Đăng nhập bằng Google" sẽ
+     không hiện ra — đây chính là lỗi đã gặp sau khi đổi tên. -->
+<script>window.PRECISELY_GOOGLE_CLIENT_ID = window.GOTCHA_GOOGLE_CLIENT_ID = "76480342321-b2s9g70uk51nnfi7h8lhnjrpco4sfleq.apps.googleusercontent.com";</script>
 <style>
 @font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
