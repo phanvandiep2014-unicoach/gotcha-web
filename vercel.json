@@ -1,6 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/sso", "destination": "/api/sso" }
+  ],
   "headers": [
     { "source": "/(.*)", "headers": [
       { "key": "Permissions-Policy", "value": "microphone=(self)" }
