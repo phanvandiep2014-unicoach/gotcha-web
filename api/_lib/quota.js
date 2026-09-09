@@ -22,9 +22,12 @@ const MESSAGES = {
   sandbox_daily_cap: "Lượt chấm thử miễn phí hôm nay đã hết. Đăng nhập để dùng 15 phút tặng khi đăng ký nhé.",
   sandbox_used: "Bạn đã dùng hết lượt chấm phát âm thử. Đăng nhập để nhận 15 phút nói có chấm — tặng một lần khi đăng ký.",
 };
+// Only name things that actually exist. An earlier version of this message promised
+// unlimited shadowing; there is no shadowing screen yet, and pronunciation scoring is
+// exactly the thing being metered — so it cannot be offered as the free consolation.
 const exhaustedMessage = (plan) => PLANS[plan].window === "once"
-  ? "Bạn đã dùng hết 15 phút nói có chấm được tặng. Shadowing và đọc-chấm phát âm vẫn miễn phí không giới hạn."
-  : `Bạn đã dùng hết ${Math.round(PLANS[plan].seconds / 60)} phút nói của tháng này. Hạn mức làm mới vào đầu tháng sau.`;
+  ? "Bạn đã dùng hết 15 phút chấm phát âm được tặng. Luyện nói và toàn bộ phản hồi về từ vựng, ngữ pháp, nhịp nói vẫn miễn phí không giới hạn."
+  : `Bạn đã dùng hết ${Math.round(PLANS[plan].seconds / 60)} phút chấm phát âm của tháng này. Hạn mức làm mới vào đầu tháng sau.`;
 
 /** Client IP, hashed — we count per visitor without storing anyone's address. */
 export function ipKey(req) {

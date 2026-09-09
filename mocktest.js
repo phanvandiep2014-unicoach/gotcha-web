@@ -53,7 +53,7 @@
     <span class="qtext">C\xF2n <b>${n}</b>/${o} ph\xFAt n\xF3i ${a}</span>
   </div>`}function we(e){let n=e.signedIn?'<a class="btn-primary" href="#pricing">Xem c\xE1c g\xF3i</a>':'<a class="btn-primary" href="profile">\u0110\u0103ng nh\u1EADp \u2014 nh\u1EADn 15 ph\xFAt</a>';return`<div class="quotaout">
     <p class="qmsg">${e.message}</p>
-    <p class="qfree">V\u1EABn mi\u1EC5n ph\xED, kh\xF4ng gi\u1EDBi h\u1EA1n: shadowing, \u0111\u1ECDc-ch\u1EA5m c\xE2u luy\u1EC7n, s\u1ED5 t\u1EEB Lexicon, chu\u1ED7i ng\xE0y,
+    <p class="qfree">V\u1EABn mi\u1EC5n ph\xED, kh\xF4ng gi\u1EDBi h\u1EA1n: luy\u1EC7n n\xF3i, s\u1ED5 t\u1EEB Lexicon, chu\u1ED7i ng\xE0y,
       v\xE0 to\xE0n b\u1ED9 ph\u1EA3n h\u1ED3i v\u1EC1 t\u1EEB v\u1EF1ng, ng\u1EEF ph\xE1p v\xE0 nh\u1ECBp n\xF3i.</p>
     ${n}
   </div>`}function et(e){return e>=80?"pgood":e>=60?"pmid":"pbad"}function ke(e){if(!e.ok)return`<div class="pronres bad">Ch\u01B0a nghe r\xF5 (${e.reason||"th\u1EED l\u1EA1i"}). N\xF3i to, ch\u1EADm v\xE0 r\xF5 nh\xE9.</div>`;let n=e.words.map(t=>`<span class="pw ${et(t.accuracy)}" title="${t.accuracy}${t.error!=="None"?" \xB7 "+t.error:""}">${t.w}</span>`).join(" "),o=e.weakPhonemes.filter(t=>t.accuracy<80).slice(0,3).map(t=>`<span class="wp">${t.p} <b>${t.accuracy}</b></span>`).join(" ");return`<div class="pronres">

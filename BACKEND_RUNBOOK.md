@@ -49,6 +49,19 @@ git push
 | POST | `/api/pronounce` | Chấm phát âm (Azure) — **có tính hạn mức** |
 | GET | `/api/quota` | Số phút nói còn lại của phiên hiện tại |
 | POST/GET/DELETE | `/api/recordings` | Bản ghi học viên chủ động giữ lại (S3/R2) |
+| GET | `/api/cost` | Số phút nói đã chấm — **chỉ tài khoản quản trị** |
+
+## 6d. Đo chi phí thật mỗi phút nói — trang `/cost`
+
+Mô hình giá đang giả định **~650đ mỗi phút nói**, lấy từ bảng giá niêm yết của Azure chứ không phải từ hoá đơn. Mọi biên lợi nhuận trong `MO-HINH-GIA-PRECISELY.xlsx` đều dựa lên con số đó, nên đây là việc **số 1** trong danh sách cần chốt.
+
+Trang `/cost` đo thứ đo được chính xác (**số giây** gửi đi chấm, ghi trong `speech_usage`) và để bạn nhập thứ chỉ hoá đơn mới biết (**số tiền**), rồi tự chia ra chi phí thật mỗi phút và so với giả định.
+
+**Bật trang:** đặt `PRECISELY_ADMIN_SUBS` = danh sách `sub` của tài khoản quản trị, ngăn bằng dấu phẩy (ví dụ `lms:1042` hoặc Google sub). **Chưa đặt thì không ai vào được** — một trang số liệu doanh thu mà mặc định mở còn tệ hơn là không có. Người không phải quản trị nhận 404 chứ không phải 403, để không xác nhận trang này tồn tại.
+
+**Cách đọc:** trang từ chối tính khi kỳ đó chưa đủ **20 phút** — đúng mốc "20 buổi thật" trong tài liệu giá. Khi chi phí thật cao hơn giả định, nhớ nguyên tắc đã chốt: **giảm hạn mức, đừng tăng giá** (phần lớn khách không dùng hết hạn mức nên gần như không cảm nhận được, còn tăng giá thì ai cũng thấy).
+
+⚠️ Bảng `speech_usage` có dòng `sandbox:all` là **bản sao tổng** của mọi dòng `ip:*`. Cộng cả bảng là đếm đôi phần khách vãng lai. `usageSummary()` đã loại nó ra — nếu tự viết truy vấn khác thì nhớ loại.
 
 ## 6c. Lưu bản ghi âm trên S3 / Cloudflare R2
 

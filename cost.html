@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chi phí phút nói · Precisely (nội bộ)</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#11183A">
+<link rel="icon" href="assets/favicon-32.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;}
+@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+:root{
+  --sapphire:#11183A;--oxblood:#5A1726;--emerald:#123F33;
+  --gold:#C8A14B;--gold-light:#E7CE8E;--gold-dark:#8A6A28;
+  --parchment:#F4ECD8;--parchment2:#E9DCBE;--ivory:#FBF7EE;--ink:#241B10;
+  --foil:linear-gradient(135deg,#8A6A28,#E7CE8E 26%,#C8A14B 48%,#F4E7BC 66%,#A9863A 86%,#8A6A28);
+  --fh:'Trajan Pro','Cormorant Garamond',serif;--fs:'Cormorant Garamond',serif;--fb:'EB Garamond',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--fb);color:var(--ink);background:var(--ivory);line-height:1.6}
+header{background:var(--sapphire);color:var(--parchment);display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--gold-dark)}
+header .crest{height:32px}
+.wm{font-family:var(--fh);font-weight:700;font-size:1.05rem;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.05em}
+.tagi{font-family:var(--fs);font-style:italic;color:var(--gold-light);font-size:.82rem}
+.spacer{flex:1}
+header a{color:var(--gold-light);font-family:var(--fh);font-size:.72rem;text-decoration:none}
+main{max-width:840px;margin:0 auto;padding:22px 16px 70px}
+h2{font-family:var(--fh);font-size:1.15rem;color:var(--sapphire);margin-bottom:8px}
+.card{background:var(--parchment);border:1px solid var(--gold-dark);border-radius:12px;padding:16px 18px;margin-bottom:18px}
+.why{background:var(--ivory);border-left:4px solid var(--oxblood);border-radius:0 10px 10px 0;padding:12px 16px;margin-bottom:18px;font-size:.93rem}
+.why b{color:var(--sapphire)}
+.nums{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+@media(min-width:640px){.nums{grid-template-columns:repeat(4,1fr)}}
+.nums div{text-align:center;background:var(--ivory);border:1px solid var(--gold-dark);border-radius:9px;padding:10px 6px}
+.nums b{display:block;font-family:var(--fh);font-size:1.3rem;color:var(--sapphire)}
+.nums span{font-size:.73rem;color:var(--gold-dark)}
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin-top:10px}
+th{text-align:left;font-family:var(--fh);font-size:.68rem;letter-spacing:.06em;color:var(--oxblood);border-bottom:1px solid var(--gold-dark);padding:7px 5px}
+td{padding:8px 5px;border-bottom:1px solid var(--parchment2)}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+label.bill{display:block;margin-top:6px;font-size:.92rem}
+label.bill span{display:block;font-family:var(--fh);font-size:.68rem;letter-spacing:.07em;color:var(--oxblood);margin-bottom:5px}
+input,select{font-family:inherit;font-size:1rem;padding:9px 11px;border:1px solid var(--gold-dark);border-radius:8px;background:#fff;width:100%;max-width:280px}
+.verdict{margin-top:14px;padding:12px 15px;border-radius:10px;font-size:.97rem}
+.verdict.ok{background:#eef4f1;border:1px solid var(--emerald);color:var(--emerald)}
+.verdict.warn{background:#fdefe0;border:1px solid var(--oxblood);color:var(--oxblood)}
+.verdict.none{background:var(--parchment2);border:1px solid var(--gold-dark);color:var(--gold-dark)}
+.dim{color:var(--gold-dark);opacity:.9}
+.err{background:#fdefe0;border:1px solid var(--oxblood);border-radius:10px;padding:14px;color:var(--oxblood)}
+footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.83rem;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <img class="crest" src="assets/crest.svg" alt="UNICOACH" onerror="this.style.display='none'">
+  <div>
+    <div class="wm">PRECISELY</div>
+    <div class="tagi">Chi phí phút nói — công cụ nội bộ</div>
+  </div>
+  <div class="spacer"></div>
+  <a href="/">← Trang chủ</a>
+</header>
+<main>
+  <div class="why">
+    <b>Trang này đo một thứ và suy ra một thứ.</b> Số <b>giây</b> gửi đi chấm là đo chính xác —
+    mỗi lần gọi Azure đều được ghi vào bảng <code>speech_usage</code>. Số <b>tiền</b> thì không:
+    con số 650đ/phút trong mô hình giá lấy từ bảng giá niêm yết, không phải từ hoá đơn.
+    Nhập hoá đơn Azure thật vào ô bên dưới để thay giả định bằng phép chia.
+  </div>
+
+  <div class="card">
+    <h2>Đã dùng bao nhiêu</h2>
+    <div id="totals" class="nums"></div>
+    <div id="table"></div>
+  </div>
+
+  <div class="card">
+    <h2>Đối chiếu với hoá đơn thật</h2>
+    <label class="bill"><span>KỲ</span>
+      <select id="period"></select></label>
+    <label class="bill" style="margin-top:12px"><span>HOÁ ĐƠN AZURE SPEECH CỦA KỲ ĐÓ (VND)</span>
+      <input id="bill" type="number" min="0" step="1000" placeholder="ví dụ 1250000"></label>
+    <div id="verdict" class="verdict none">Nhập hoá đơn để tính chi phí thật mỗi phút.</div>
+  </div>
+</main>
+<footer>“Per te, ad astra” · công cụ nội bộ, không dành cho học viên</footer>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return Math.round(n).toLocaleString("vi-VN"); };
+  var mins = function (s) { return (s / 60); };
+  var data = null;
+
+  function paint() {
+    var rows = data.periods;
+    var totalSec = data.totalSeconds;
+    var sandbox = rows.reduce(function (n, r) { return n + r.sandboxSeconds; }, 0);
+    var account = rows.reduce(function (n, r) { return n + r.accountSeconds; }, 0);
+    var assumed = totalSec * data.assumedVndPerSecond;
+
+    $("totals").innerHTML =
+      '<div><b>' + fmt(mins(totalSec)) + '</b><span>phút đã chấm</span></div>' +
+      '<div><b>' + fmt(mins(account)) + '</b><span>phút — tài khoản</span></div>' +
+      '<div><b>' + fmt(mins(sandbox)) + '</b><span>phút — khách vãng lai</span></div>' +
+      '<div><b>' + fmt(assumed) + 'đ</b><span>ước tính theo giả định</span></div>';
+
+    if (!rows.length) {
+      $("table").innerHTML = '<p class="dim" style="margin-top:10px">Chưa có lần chấm nào được ghi nhận.</p>';
+      return;
+    }
+    var body = rows.map(function (r) {
+      var tot = r.sandboxSeconds + r.accountSeconds;
+      return '<tr><td>' + (r.period === "trial" ? "15 phút tặng (một lần)" : r.period) + '</td>' +
+        '<td class="n">' + fmt(mins(r.accountSeconds)) + '</td>' +
+        '<td class="n">' + fmt(mins(r.sandboxSeconds)) + '</td>' +
+        '<td class="n">' + r.accounts + '</td>' +
+        '<td class="n">' + fmt(mins(tot)) + '</td></tr>';
+    }).join("");
+    $("table").innerHTML =
+      '<table><tr><th>Kỳ</th><th style="text-align:right">Phút tài khoản</th>' +
+      '<th style="text-align:right">Phút khách</th><th style="text-align:right">Số tài khoản</th>' +
+      '<th style="text-align:right">Tổng phút</th></tr>' + body + '</table>';
+
+    $("period").innerHTML = rows.map(function (r) {
+      return '<option value="' + r.period + '">' + (r.period === "trial" ? "15 phút tặng (một lần)" : r.period) + '</option>';
+    }).join("");
+  }
+
+  function compare() {
+    var bill = Number($("bill").value);
+    var p = $("period").value;
+    var row = (data.periods || []).filter(function (r) { return r.period === p; })[0];
+    var el = $("verdict");
+    if (!bill || !row) {
+      el.className = "verdict none";
+      el.textContent = "Nhập hoá đơn để tính chi phí thật mỗi phút.";
+      return;
+    }
+    var m = mins(row.sandboxSeconds + row.accountSeconds);
+    if (m < 20) {
+      el.className = "verdict none";
+      el.innerHTML = "Kỳ này mới có <b>" + fmt(m) + "</b> phút — quá ít để tin con số. " +
+        "Tài liệu giá đặt mốc <b>20 buổi thật</b> trước khi thay giả định.";
+      return;
+    }
+    var real = bill / m;
+    var assumedPerMin = data.assumedVndPerSecond * 60;
+    var diff = (real - assumedPerMin) / assumedPerMin * 100;
+    var worse = real > assumedPerMin;
+    el.className = "verdict " + (worse ? "warn" : "ok");
+    el.innerHTML =
+      "Chi phí thật: <b>" + fmt(real) + "đ mỗi phút</b> (" + fmt(bill) + "đ ÷ " + fmt(m) + " phút).<br>" +
+      "Giả định đang dùng là " + fmt(assumedPerMin) + "đ — thật " +
+      (worse ? "<b>đắt hơn</b> " : "<b>rẻ hơn</b> ") + Math.abs(Math.round(diff)) + "%.<br>" +
+      "<span class=\"dim\">Thay số này vào sheet “2. Chi phí đơn vị” của MO-HINH-GIA-PRECISELY.xlsx. " +
+      (worse ? "Biên lợi nhuận mọi gói sẽ mỏng đi — nhớ nguyên tắc: giảm hạn mức, đừng tăng giá."
+             : "Có dư địa; vẫn đừng nới hạn mức vội, hãy đợi thêm dữ liệu.") + "</span>";
+  }
+
+  fetch("/api/cost", { credentials: "same-origin" })
+    .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, b: b }; }); })
+    .then(function (res) {
+      if (!res.ok) {
+        document.querySelector("main").innerHTML =
+          '<div class="err">' + (res.b.message || "Trang này chỉ dành cho tài khoản quản trị.") + '</div>';
+        return;
+      }
+      data = res.b; paint(); compare();
+      $("bill").addEventListener("input", compare);
+      $("period").addEventListener("change", compare);
+    })
+    .catch(function () {
+      document.querySelector("main").innerHTML = '<div class="err">Không gọi được /api/cost.</div>';
+    });
+})();
+</script>
+</body>
+</html>

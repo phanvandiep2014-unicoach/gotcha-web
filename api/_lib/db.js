@@ -65,6 +65,39 @@ async function ensureSchema() {
   ensured = true;
 }
 
+/**
+ * Seconds of paid speech, grouped by period.
+ *
+ * Careful with the sandbox rows: `sandbox:all` is a convenience running total of every
+ * `ip:*` row, so summing the table blindly counts anonymous usage twice. It is excluded
+ * here and the `ip:*` rows are summed instead.
+ */
+export async function usageSummary() {
+  if (!hasDb()) {
+    const out = new Map();
+    for (const [key, seconds] of mem.usage) {
+      const [sub, period] = key.split("|");
+      if (sub === "sandbox:all") continue;
+      const row = out.get(period) || { period, sandboxSeconds: 0, accountSeconds: 0, accounts: 0 };
+      if (sub.startsWith("ip:")) row.sandboxSeconds += seconds;
+      else { row.accountSeconds += seconds; row.accounts += 1; }
+      out.set(period, row);
+    }
+    return [...out.values()].sort((a, b) => b.period.localeCompare(a.period));
+  }
+  await ensureSchema();
+  const r = await getPool().query(`
+    SELECT period,
+      COALESCE(SUM(seconds) FILTER (WHERE sub LIKE 'ip:%'), 0)::int AS sandbox_seconds,
+      COALESCE(SUM(seconds) FILTER (WHERE sub NOT LIKE 'ip:%' AND sub <> 'sandbox:all'), 0)::int AS account_seconds,
+      COUNT(*) FILTER (WHERE sub NOT LIKE 'ip:%' AND sub <> 'sandbox:all')::int AS accounts
+    FROM speech_usage GROUP BY period ORDER BY period DESC`);
+  return r.rows.map(x => ({
+    period: x.period, sandboxSeconds: x.sandbox_seconds,
+    accountSeconds: x.account_seconds, accounts: x.accounts,
+  }));
+}
+
 export async function addRecording(r) {
   if (!hasDb()) { mem.recordings.set(r.id, { ...r, created_at: new Date().toISOString() }); return; }
   await ensureSchema();
