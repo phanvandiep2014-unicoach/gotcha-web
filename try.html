@@ -72,10 +72,55 @@ body.no-vi .vi{display:none}
 .link,.newp{font-family:var(--fh);font-size:.78rem;letter-spacing:.05em;background:transparent;border:1px solid var(--oxblood);color:var(--oxblood);border-radius:8px;padding:9px 16px;cursor:pointer;margin-top:16px}
 footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.85rem;padding:20px}
 
+/* practice vs exam mode */
+.modebar{margin-bottom:14px}
+.modes{display:inline-flex;border:1px solid var(--gold-dark);border-radius:10px;overflow:hidden}
+.mode{font-family:var(--fh);font-size:.78rem;letter-spacing:.03em;font-weight:600;background:transparent;border:0;color:var(--gold-dark);padding:9px 16px;cursor:pointer}
+.mode.on{background:var(--foil);color:var(--sapphire)}
+.modewhy{margin-top:8px;font-size:.86rem;color:var(--gold-dark);font-family:var(--fs);font-style:italic}
+.cuetools{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.tool{font-family:var(--fh);font-size:.75rem;letter-spacing:.04em;font-weight:600;background:var(--ivory);border:1px solid var(--gold-dark);color:var(--oxblood);border-radius:8px;padding:7px 13px;cursor:pointer}
+.tool:hover{background:var(--parchment2)}
+.tool[disabled]{opacity:.55;cursor:default}
+#ideas:not(:empty){margin-top:12px;background:var(--ivory);border:1px dashed var(--gold-dark);border-radius:10px;padding:10px 14px}
+#ideas ul{margin:6px 0 0 18px;font-size:.94rem;line-height:1.8}
+#ideas .lbl2{font-family:var(--fh);font-size:.68rem;letter-spacing:.08em;color:var(--oxblood)}
+.rec.untimed #timer{color:var(--gold-dark)}
+.rec.untimed .track{visibility:hidden}
+
+/* keep this recording? */
+.keep{margin-top:18px;background:var(--ivory);border:1px solid var(--gold);border-radius:12px;padding:14px 16px}
+.keep audio{width:100%;margin:8px 0}
+.keep .kmsg{font-size:.95rem;color:var(--sapphire);font-family:var(--fs);font-style:italic}
+.keep .krow{margin-top:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.keep .krow .dim{font-size:.84rem}
+
+/* upgraded sample + retry loop */
+.upgrade{margin-top:20px;background:var(--ivory);border:1px solid var(--gold);border-radius:12px;padding:16px 18px}
+.upgrade.clean{border-color:var(--emerald)}
+.umsg{font-size:.92rem;color:var(--gold-dark);font-style:italic;font-family:var(--fs);margin-bottom:10px}
+.utext{background:var(--parchment);border-radius:10px;padding:12px 14px;font-size:1.02rem;line-height:1.95}
+mark.up{background:linear-gradient(180deg,transparent 58%,rgba(200,161,75,.55) 58%);color:inherit;padding:0 1px;cursor:help;border-bottom:1px dotted var(--gold-dark)}
+.unote{font-size:.84rem;color:var(--gold-dark);margin-top:10px;font-family:var(--fs);font-style:italic}
+.btn-primary{font-family:var(--fh);font-size:.85rem;letter-spacing:.04em;font-weight:700;background:var(--foil);color:var(--sapphire);border:1px solid var(--gold-dark);border-radius:9px;padding:12px 22px;cursor:pointer;margin-top:14px}
+.btn-primary:hover{filter:brightness(1.07)}
+.retrycue{margin-top:16px;background:var(--ivory);border:1px dashed var(--gold);border-radius:12px;padding:14px 16px}
+.retryres{margin-top:8px}
+table.delta{width:100%;border-collapse:collapse;font-size:.95rem;margin-top:8px}
+table.delta th{text-align:left;font-family:var(--fh);font-size:.72rem;letter-spacing:.06em;color:var(--oxblood);border-bottom:1px solid var(--gold-dark);padding:6px 4px}
+table.delta td{padding:8px 4px;border-bottom:1px solid var(--parchment2);vertical-align:top}
+table.delta td .en2{display:block;font-size:.78rem;color:var(--gold-dark);font-style:italic;font-family:var(--fs)}
+table.delta tr.up td:last-child{color:var(--emerald);font-weight:600}
+table.delta tr.down td:last-child{color:var(--oxblood)}
+table.delta tr.flat td:last-child{color:var(--gold-dark)}
+.footnote{margin-top:14px;background:var(--parchment);border-left:4px solid var(--oxblood);border-radius:0 8px 8px 0;padding:10px 12px;font-size:.9rem;line-height:1.6}
+.footnote .dim{display:block;margin-top:4px;font-size:.82rem;font-style:italic;font-family:var(--fs)}
+
 /* Trajan Pro — balanced weight scale */
 .wm{font-weight:700}
 .progress h3,.metrics .m b{font-weight:700}
 .lbl,.badge,.tag,.newp{font-weight:600}
+.upgrade h3,.retryres h3,.btn-primary{font-weight:700}
 </style>
 </head>
 <body>
@@ -89,12 +134,24 @@ footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gol
   <a href="/" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">← Trang chủ</a><a href="test" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">📝 Thi thử</a><a href="chat" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">👑 Duke</a><a href="profile" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">👤 Hồ sơ</a><button id="langBtn">VI ✓</button>
 </header>
 <main>
+  <div class="modebar">
+    <div class="modes">
+      <button id="modePractice" class="mode on">🌱 Luyện tập</button>
+      <button id="modeExam" class="mode">⏱ Áp lực thi</button>
+    </div>
+    <div class="modewhy" id="modeWhy"></div>
+  </div>
   <div class="cueCard">
     <div class="lbl">ĐỀ NÓI · CUE CARD</div>
     <div id="cue"></div>
     <div id="hint"></div>
+    <div class="cuetools">
+      <button id="listenBtn" class="tool">🔊 Nghe đề</button>
+      <button id="ideasBtn" class="tool">💡 Gợi ý dàn ý</button>
+    </div>
+    <div id="ideas"></div>
   </div>
-  <div class="rec">
+  <div class="rec" id="rec">
     <button id="recBtn" data-state="idle">RECORD</button>
     <div id="timer">60</div>
     <div class="track"><div id="bar"></div></div>

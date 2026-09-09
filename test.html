@@ -173,6 +173,27 @@ ol.artic li{margin-bottom:5px;padding-left:2px}
 .pweak.good{color:var(--emerald)}
 .wp{display:inline-block;background:var(--ivory);border:1px solid var(--gold-dark);border-radius:6px;padding:1px 7px;margin:2px}
 .wp b{color:var(--oxblood)}
+
+/* speaking-minute meter — informs, does not nag */
+.quota{display:flex;align-items:center;gap:10px;margin:14px 0 4px;font-size:.86rem;color:var(--gold-dark)}
+.quota .qbar{flex:0 0 120px;height:7px;background:var(--parchment2);border:1px solid var(--gold-dark);border-radius:5px;overflow:hidden}
+.quota .qbar i{display:block;height:100%;background:var(--foil)}
+.quota.low{color:var(--oxblood)}
+.quota.low .qbar i{background:var(--oxblood)}
+.quota.try,.quota.out{display:block}
+.quota a{color:var(--oxblood);text-decoration:underline}
+.quotaout{margin-top:10px;background:var(--parchment);border:1px solid var(--gold);border-radius:10px;padding:14px}
+.quotaout .qmsg{font-weight:600;color:var(--sapphire)}
+.quotaout .qfree{margin:8px 0 12px;font-size:.9rem;color:var(--gold-dark)}
+
+/* one-time consent before any clip leaves the device */
+.consentbox{margin-top:10px;background:var(--ivory);border:1px solid var(--gold);border-radius:10px;padding:14px 16px}
+.consentbox .cmsg{color:var(--sapphire)}
+.consentbox .cbody{margin-top:8px;font-size:.9rem;line-height:1.65}
+.consentbox .cbtns{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn-primary{font-family:var(--fh);font-size:.82rem;letter-spacing:.04em;font-weight:700;background:var(--foil);color:var(--sapphire);border:1px solid var(--gold-dark);border-radius:9px;padding:11px 20px;cursor:pointer}
+.btn-primary:hover{filter:brightness(1.07)}
+.tool{font-family:var(--fh);font-size:.78rem;letter-spacing:.04em;font-weight:600;background:transparent;border:1px solid var(--gold-dark);color:var(--oxblood);border-radius:8px;padding:10px 16px;cursor:pointer}
 </style>
 </head>
 <body>

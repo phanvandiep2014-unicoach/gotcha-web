@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   const avg = (k) => sessions.length ? Math.round(sessions.reduce((a, s) => a + (s[k] || 0), 0) / sessions.length) : 0;
   const chips = (duke.items || []).slice(-8).map((i) => `<span class="chip">${esc(i.kw)}</span>`).join(" ");
   res.status(200).send(`<!doctype html><html lang="vi"><head><meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><title>Hồ sơ người học · Gotcha</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"><title>Hồ sơ người học · Precisely</title>
   <style>@page{margin:16mm}body{font-family:Georgia,serif;color:#241B10;max-width:720px;margin:24px auto;padding:0 18px}
   h1{font-size:1.6rem;color:#11183A;margin:0}.motto{color:#8A6A28;font-style:italic;margin:2px 0 18px}
   h2{font-size:1rem;color:#5A1726;border-bottom:2px solid #C8A14B;padding-bottom:4px;margin:20px 0 10px}
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
   .stat b{display:block;font-size:1.5rem;color:#11183A}.stat span{font-size:.8rem;color:#8A6A28}
   .chip{display:inline-block;background:#11183A;color:#E7CE8E;border-radius:12px;padding:3px 10px;font-size:.8rem;margin:2px}
   .foot{text-align:center;color:#8A6A28;font-style:italic;margin-top:22px;font-size:.85rem}</style></head><body>
-  <h1>GOTCHA · Hồ sơ người học</h1>
+  <h1>PRECISELY · Hồ sơ người học</h1>
   <div class="motto">${esc(r.user?.name || "Học viên")} · Per te, ad astra — by UNICOACH</div>
   ${ev ? `<p>Band ước tính gần nhất: <b>${Number(ev.low).toFixed(1)}–${Number(ev.high).toFixed(1)}</b> (${esc(ev.day)}). Band mục tiêu: <b>${esc(prefs.targetBand || "6.5")}</b>.</p>` : ""}
   <h2>Tổng quan luyện tập</h2>
@@ -37,6 +37,6 @@ export default async function handler(req, res) {
     <div class="stat"><b>${avg("fillers")}</b><span>từ đệm TB</span></div>
   </div>
   ${chips ? `<h2>Chủ đề đã trò chuyện</h2><div>${chips}</div>` : ""}
-  <div class="foot">Hồ sơ chỉ đọc, do học viên chủ động chia sẻ · Gotcha · UNICOACH</div>
+  <div class="foot">Hồ sơ chỉ đọc, do học viên chủ động chia sẻ · Precisely · UNICOACH</div>
   </body></html>`);
 }

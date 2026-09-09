@@ -1,10 +1,10 @@
-// Gotcha backend — data layer. Uses Postgres when DATABASE_URL is set; otherwise an
+// Precisely backend — data layer. Uses Postgres when DATABASE_URL is set; otherwise an
 // in-memory store (dev/demo only — data is per-instance and NOT persisted).
 import pg from "pg";
 
 let pool = null;
 let ensured = false;
-const mem = { users: new Map(), data: new Map(), shares: new Map() };
+const mem = { users: new Map(), data: new Map(), shares: new Map(), usage: new Map(), recordings: new Map() };
 
 export const hasDb = () => !!process.env.DATABASE_URL;
 
@@ -34,8 +34,95 @@ async function ensureSchema() {
     CREATE TABLE IF NOT EXISTS shares (
       token text PRIMARY KEY, sub text REFERENCES users(sub) ON DELETE CASCADE,
       created_at timestamptz DEFAULT now()
-    );`);
+    );
+    -- Seconds of audio actually sent to the paid speech vendor. This is the only
+    -- place a speaking quota can be enforced honestly: the client cannot be trusted
+    -- to count, and every second here is real money (~10đ/second).
+    -- No FK to users: anonymous sandbox usage is keyed by hashed IP ("ip:<hash>").
+    CREATE TABLE IF NOT EXISTS speech_usage (
+      sub        text NOT NULL,
+      period     text NOT NULL,          -- 'trial' | 'YYYY-MM' | 'YYYY-MM-DD'
+      seconds    integer NOT NULL DEFAULT 0,
+      updated_at timestamptz DEFAULT now(),
+      PRIMARY KEY (sub, period)
+    );
+    -- Recordings the learner explicitly chose to keep. Storing is opt-in per clip, so a
+    -- missing row means "not kept", not "lost". The audio lives in the bucket; this table
+    -- holds only the pointer and the numbers we want to chart later.
+    CREATE TABLE IF NOT EXISTS recordings (
+      id           text PRIMARY KEY,
+      sub          text NOT NULL,
+      object_key   text NOT NULL,
+      prompt_id    text,
+      prompt_text  text,
+      duration_sec integer,
+      transcript   text,
+      wpm          integer,
+      pron_score   integer,
+      created_at   timestamptz DEFAULT now()
+    );
+    CREATE INDEX IF NOT EXISTS recordings_sub_idx ON recordings (sub, created_at DESC);`);
   ensured = true;
+}
+
+export async function addRecording(r) {
+  if (!hasDb()) { mem.recordings.set(r.id, { ...r, created_at: new Date().toISOString() }); return; }
+  await ensureSchema();
+  await getPool().query(
+    `INSERT INTO recordings (id,sub,object_key,prompt_id,prompt_text,duration_sec,transcript,wpm,pron_score)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) ON CONFLICT (id) DO NOTHING`,
+    [r.id, r.sub, r.objectKey, r.promptId || null, r.promptText || null,
+     r.durationSec || null, r.transcript || null, r.wpm || null, r.pronScore || null]
+  );
+}
+
+export async function listRecordings(sub, limit = 50) {
+  if (!hasDb()) {
+    return [...mem.recordings.values()].filter(r => r.sub === sub)
+      .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at))).slice(0, limit);
+  }
+  await ensureSchema();
+  const r = await getPool().query(
+    `SELECT id, object_key, prompt_id, prompt_text, duration_sec, transcript, wpm, pron_score, created_at
+     FROM recordings WHERE sub=$1 ORDER BY created_at DESC LIMIT $2`, [sub, limit]);
+  return r.rows;
+}
+
+/** Looks a recording up WITH its owner, so a caller can check ownership before acting. */
+export async function getRecording(id) {
+  if (!hasDb()) return mem.recordings.get(id) || null;
+  await ensureSchema();
+  const r = await getPool().query(`SELECT id, sub, object_key FROM recordings WHERE id=$1`, [id]);
+  return r.rows[0] || null;
+}
+
+export async function removeRecording(id) {
+  if (!hasDb()) { mem.recordings.delete(id); return; }
+  await ensureSchema();
+  await getPool().query(`DELETE FROM recordings WHERE id=$1`, [id]);
+}
+
+/** Seconds already spent by `sub` in `period`. Never throws — a broken meter must not
+ *  block a paying learner, so callers treat an error as "unknown" and fail open. */
+export async function getUsageSeconds(sub, period) {
+  if (!hasDb()) return mem.usage.get(`${sub}|${period}`) || 0;
+  await ensureSchema();
+  const r = await getPool().query(`SELECT seconds FROM speech_usage WHERE sub=$1 AND period=$2`, [sub, period]);
+  return r.rows[0] ? Number(r.rows[0].seconds) : 0;
+}
+
+/** Adds `seconds` to the meter and returns the new total. */
+export async function addUsageSeconds(sub, period, seconds) {
+  const key = `${sub}|${period}`;
+  if (!hasDb()) { const n = (mem.usage.get(key) || 0) + seconds; mem.usage.set(key, n); return n; }
+  await ensureSchema();
+  const r = await getPool().query(
+    `INSERT INTO speech_usage (sub,period,seconds,updated_at) VALUES ($1,$2,$3,now())
+     ON CONFLICT (sub,period) DO UPDATE SET seconds = speech_usage.seconds + $3, updated_at = now()
+     RETURNING seconds`,
+    [sub, period, seconds]
+  );
+  return Number(r.rows[0].seconds);
 }
 
 export async function upsertUser(u) {
