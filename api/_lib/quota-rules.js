@@ -11,15 +11,23 @@ export const PLANS = {
   // permanent tier that costs real money every month; a one-off one turns the same spend
   // into customer-acquisition cost. See §1.1 of the pricing document.
   free: { label: "Thử", seconds: 15 * 60, window: "once" },
-  speak: { label: "Speak", seconds: 60 * 60, window: "month" },
-  speak_plus: { label: "Speak+", seconds: 120 * 60, window: "month" },
+  // 23/09/2026: 60→90 và 120→180 phút. Đo lại giá Azure: short-audio REST có
+  // chấm phát âm ≈ 1,30 USD/giờ ≈ 570đ/phút (ta vẫn tính 660đ/phút cho an toàn).
+  // Phản hồi 42 mã lỗi chạy bằng luật, giọng Duke là TTS trình duyệt → phút chấm
+  // phát âm là chi phí biến đổi DUY NHẤT. 90 phút × 660đ = 59.400đ ≤ 46% giá 129k.
+  // Bán qua WriteRight (PLANS trong app/api/checkout/route.ts) — giữ hai nơi khớp nhau.
+  speak: { label: "Speak", seconds: 90 * 60, window: "month" },
+  speak_plus: { label: "Speak+", seconds: 180 * 60, window: "month" },
   // Class seats get a deliberately smaller allowance than retail: at 20 minutes each a
   // busy class turns the plan loss-making. See §3.3 of the pricing document.
   classroom: { label: "Lớp", seconds: 12 * 60, window: "month" },
 };
 
 /** Longest single clip we will pay to score. The Part 2 long turn is 2 minutes. */
-export const MAX_CLIP_SECONDS = Number(process.env.PRECISELY_MAX_CLIP_SECONDS || 130);
+// 23/09/2026: 130 → 30. /api/pronounce gọi REST short-audio của Azure, mà chấm phát
+// âm ở đường đó chỉ nhận tối đa 30 giây — gửi dài hơn là Azure chấm thiếu nhưng ta
+// vẫn trừ phút của học viên. Muốn chấm Part 2 dài thì phải cắt lát ở client trước.
+export const MAX_CLIP_SECONDS = Number(process.env.PRECISELY_MAX_CLIP_SECONDS || 30);
 /** Anonymous try-it-now allowance, per visitor per day. One 60-second answer. */
 export const SANDBOX_SECONDS = Number(process.env.PRECISELY_SANDBOX_SECONDS || 60);
 /** Ceiling on what all anonymous visitors together may spend in one day. */

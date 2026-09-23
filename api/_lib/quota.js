@@ -9,6 +9,7 @@
 // the meter back. The rules themselves are pure and tested separately.
 import crypto from "crypto";
 import { getUsageSeconds, addUsageSeconds } from "./db.js";
+import { resolvePlan } from "./entitlement.js";
 import {
   PLANS, MAX_CLIP_SECONDS, SANDBOX_SECONDS, periodKey, planFor, decide,
 } from "./quota-rules.js";
@@ -55,13 +56,13 @@ export async function checkQuota(req, session, seconds) {
       ]);
       args = { scope: "sandbox", seconds, used: 0, sandboxUsedToday: mine, sandboxUsedAll: all };
     } else {
-      const plan = planFor(session);
+      const plan = await resolvePlan(session);
       const used = await getUsageSeconds(session.sub, periodKey(PLANS[plan].window));
       args = { scope: "account", plan, seconds, used, sandboxUsedToday: 0, sandboxUsedAll: 0 };
     }
     const v = decide(args);
-    if (v.ok) return v;
-    const plan = anon ? null : planFor(session);
+    if (v.ok) return { ...v, plan: args.plan ?? null };
+    const plan = anon ? null : args.plan;
     return { ...v, plan, message: MESSAGES[v.reason] || exhaustedMessage(plan || "free") };
   } catch (e) {
     console.error("[quota] check failed, failing open:", e?.message);
@@ -70,7 +71,7 @@ export async function checkQuota(req, session, seconds) {
 }
 
 /** Records spend after the vendor call actually happened. Never throws. */
-export async function recordUsage(req, session, seconds) {
+export async function recordUsage(req, session, seconds, plan) {
   try {
     if (!session?.sub) {
       const day = periodKey("day");
@@ -80,8 +81,10 @@ export async function recordUsage(req, session, seconds) {
       ]);
       return;
     }
-    const plan = planFor(session);
-    await addUsageSeconds(session.sub, periodKey(PLANS[plan].window), seconds);
+    // Charge the SAME bucket checkQuota looked at (the verdict carries the plan), so a
+    // plan change between check and record cannot split one clip across two periods.
+    const p = plan && PLANS[plan] ? plan : await resolvePlan(session);
+    await addUsageSeconds(session.sub, periodKey(PLANS[p].window), seconds);
   } catch (e) {
     console.error("[quota] recordUsage failed:", e?.message);
   }
@@ -95,7 +98,7 @@ export async function quotaStatus(req, session) {
     return { scope: "sandbox", plan: null, limitSeconds: SANDBOX_SECONDS,
       usedSeconds: used, remainingSeconds: Math.max(0, SANDBOX_SECONDS - used), window: "day" };
   }
-  const plan = planFor(session);
+  const plan = await resolvePlan(session);
   const { seconds: limit, window, label } = PLANS[plan];
   let used = 0;
   try { used = await getUsageSeconds(session.sub, periodKey(window)); } catch {}

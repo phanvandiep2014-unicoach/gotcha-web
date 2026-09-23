@@ -120,10 +120,16 @@ export default async function handler(req, res) {
       },
       body: audio,
     });
-    if (!r.ok) return res.status(200).json({ ...mockResult(refText), mock: true, vendorError: r.status });
+    // Vendor configured but failing: NEVER fall back to the mock here. The mock returns
+    // plausible-looking scores, and the client renders them as real — a paying learner
+    // would be told "phát âm 78" by a hash function. Say it failed; charge nothing.
+    if (!r.ok) {
+      console.error("[pronounce] Azure HTTP", r.status);
+      return res.status(200).json({ ok: false, reason: "máy chấm tạm lỗi, chưa trừ phút", vendorError: r.status });
+    }
 
     // The vendor accepted the audio, so it is billable whatever the recognition result.
-    await recordUsage(req, session, seconds);
+    await recordUsage(req, session, seconds, verdict.plan);
 
     const json = await r.json();
     if (json.RecognitionStatus && json.RecognitionStatus !== "Success")
@@ -133,7 +139,8 @@ export default async function handler(req, res) {
       remainingSeconds: Math.max(0, Math.round((verdict.remaining ?? 0))),
     });
   } catch (e) {
-    return res.status(200).json({ ...mockResult(refText), mock: true, vendorError: "exception" });
+    console.error("[pronounce] exception:", e?.message);
+    return res.status(200).json({ ok: false, reason: "máy chấm tạm lỗi", vendorError: "exception" });
   }
 }
 
