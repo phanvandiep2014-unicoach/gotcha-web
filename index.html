@@ -140,6 +140,13 @@ footer a{color:var(--gold-light);text-decoration:underline;margin:0 8px}
 .title,.pair h2,.stat b,.btn{font-weight:700}
 .card h3,.step h3,.tier h3,.pair .app h3,.tier .price,.report .band,.nav .links a,.faq summary,.tagx,.pair .app .badge{font-weight:600}
 .eyebrow,.kicker{font-weight:400}
+/* UI 2026 · Master Academic Ecosystem */
+h2.title{text-transform:uppercase;letter-spacing:.1em;font-size:clamp(1.25rem,3.2vw,1.75rem);line-height:1.35}
+.card,.step{transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s cubic-bezier(.4,0,.2,1),border-color .25s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(200,161,75,.28);border-color:var(--gold)}
+.hero{background:radial-gradient(1200px 500px at 50% -10%,#1b2550,var(--sapphire) 60%,var(--sapphire-deep)),radial-gradient(600px 500px at 0 100%,rgba(90,23,38,.28),transparent 70%);background-blend-mode:normal}
+.btn.gold{box-shadow:0 4px 16px rgba(200,161,75,.35)}
+@media(prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
 </style>
 <script src="sso-silent.js"></script>
 </head>
