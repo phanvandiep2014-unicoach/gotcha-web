@@ -13,6 +13,10 @@ export const PLANS = {
   free: { label: "Thử", seconds: 15 * 60, window: "once" },
   speak: { label: "Speak", seconds: 60 * 60, window: "month" },
   speak_plus: { label: "Speak+", seconds: 120 * 60, window: "month" },
+  // Gói hội viên gộp (WriteRight + Precisely + Pass LMS), bán từ 02/11/2026.
+  // Phải khớp writeright/components/PricingRoyal.tsx (45 / 90 phút mỗi tháng).
+  scholar: { label: "Scholar", seconds: 45 * 60, window: "month" },
+  laureate: { label: "Laureate", seconds: 90 * 60, window: "month" },
   // Class seats get a deliberately smaller allowance than retail: at 20 minutes each a
   // busy class turns the plan loss-making. See §3.3 of the pricing document.
   classroom: { label: "Lớp", seconds: 12 * 60, window: "month" },

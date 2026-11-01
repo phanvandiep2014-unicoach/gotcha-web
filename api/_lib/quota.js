@@ -12,6 +12,12 @@ import { getUsageSeconds, addUsageSeconds } from "./db.js";
 import {
   PLANS, MAX_CLIP_SECONDS, SANDBOX_SECONDS, periodKey, planFor, decide,
 } from "./quota-rules.js";
+import { entitledSpeakPlan } from "./entitlement.js";
+
+/** Gói nói thật của phiên: phiên tự mang plan thì dùng, không thì hỏi WriteRight. */
+async function sessionPlan(session) {
+  return planFor({ plan: session?.plan || await entitledSpeakPlan(session) });
+}
 
 export { PLANS, MAX_CLIP_SECONDS, periodKey, planFor };
 
@@ -55,13 +61,13 @@ export async function checkQuota(req, session, seconds) {
       ]);
       args = { scope: "sandbox", seconds, used: 0, sandboxUsedToday: mine, sandboxUsedAll: all };
     } else {
-      const plan = planFor(session);
+      const plan = await sessionPlan(session);
       const used = await getUsageSeconds(session.sub, periodKey(PLANS[plan].window));
       args = { scope: "account", plan, seconds, used, sandboxUsedToday: 0, sandboxUsedAll: 0 };
     }
     const v = decide(args);
     if (v.ok) return v;
-    const plan = anon ? null : planFor(session);
+    const plan = anon ? null : args.plan;
     return { ...v, plan, message: MESSAGES[v.reason] || exhaustedMessage(plan || "free") };
   } catch (e) {
     console.error("[quota] check failed, failing open:", e?.message);
@@ -80,7 +86,7 @@ export async function recordUsage(req, session, seconds) {
       ]);
       return;
     }
-    const plan = planFor(session);
+    const plan = await sessionPlan(session);
     await addUsageSeconds(session.sub, periodKey(PLANS[plan].window), seconds);
   } catch (e) {
     console.error("[quota] recordUsage failed:", e?.message);
@@ -95,7 +101,7 @@ export async function quotaStatus(req, session) {
     return { scope: "sandbox", plan: null, limitSeconds: SANDBOX_SECONDS,
       usedSeconds: used, remainingSeconds: Math.max(0, SANDBOX_SECONDS - used), window: "day" };
   }
-  const plan = planFor(session);
+  const plan = await sessionPlan(session);
   const { seconds: limit, window, label } = PLANS[plan];
   let used = 0;
   try { used = await getUsageSeconds(session.sub, periodKey(window)); } catch {}
