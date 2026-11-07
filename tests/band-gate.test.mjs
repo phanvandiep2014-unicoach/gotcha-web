@@ -68,3 +68,21 @@ t('re(): ngắt nghỉ nhiều làm giảm Fluency so với bài không ngắt',
   assert.equal(re(base).fc, re({ ...base, audio: null }).fc);
 });
 console.log(`\n${n} test đạt (tổng)`);
+
+// ---- Thanh thời gian khi nói ----
+const q1 = src.indexOf('function prTlState(');
+const q2 = src.indexOf('function prTl(e,n)');
+assert.ok(q1 > 0 && q2 > q1, 'không tìm thấy prTlState');
+const prTlState = new Function(src.slice(q1, q2) + '; return prTlState;')();
+t('thanh thời gian: chưa tới mốc tối thiểu -> nhắc nói thêm, thanh mặc định', () => {
+  const r = prTlState(10, 120, 60); assert.equal(r.cls, ''); assert.match(r.msg, /50s/);
+});
+t('thanh thời gian: qua mốc tối thiểu -> xanh (ok), báo đủ thời lượng', () => {
+  const r = prTlState(70, 120, 60); assert.equal(r.cls, 'ok'); assert.match(r.msg, /đủ thời lượng/);
+});
+t('thanh thời gian: còn <= 25% -> vàng; còn <= 10s -> đỏ', () => {
+  assert.equal(prTlState(95, 120, 60).cls, 'warn');
+  const r = prTlState(112, 120, 60); assert.equal(r.cls, 'end'); assert.match(r.msg, /Còn 8s/);
+});
+t('thanh thời gian: hết giờ không ra số âm', () => assert.equal(prTlState(130, 120, 60).rem, 0));
+console.log(`\n${n} test đạt (tổng, gồm thanh thời gian)`);
