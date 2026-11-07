@@ -24,7 +24,10 @@ export const PLANS = {
 };
 
 /** Longest single clip we will pay to score. The Part 2 long turn is 2 minutes. */
-export const MAX_CLIP_SECONDS = Number(process.env.PRECISELY_MAX_CLIP_SECONDS || 130);
+// 07/11/2026: 130 -> 30. /api/pronounce goi REST short-audio cua Azure, cham phat am o duong
+// do chi nhan toi da 30 giay: gui dai hon thi Azure cham thieu ma ta van tru phut cua hoc vien.
+// Muon cham Part 2 dai thi phai cat lat o client truoc.
+export const MAX_CLIP_SECONDS = Number(process.env.PRECISELY_MAX_CLIP_SECONDS || 30);
 /** Anonymous try-it-now allowance, per visitor per day. One 60-second answer. */
 export const SANDBOX_SECONDS = Number(process.env.PRECISELY_SANDBOX_SECONDS || 60);
 /** Ceiling on what all anonymous visitors together may spend in one day. */

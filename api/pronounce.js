@@ -120,7 +120,12 @@ export default async function handler(req, res) {
       },
       body: audio,
     });
-    if (!r.ok) return res.status(200).json({ ...mockResult(refText), mock: true, vendorError: r.status });
+    // Azure da cau hinh nhung loi: KHONG roi ve mock. Mock tra diem trong nhu that va client
+    // hien nhu that - hoc vien tra phi se bi bao "phat am 78" boi mot ham bam. Bao loi, khong tru phut.
+    if (!r.ok) {
+      console.error("[pronounce] Azure HTTP", r.status);
+      return res.status(200).json({ ok: false, reason: "máy chấm tạm lỗi, chưa trừ phút", vendorError: r.status });
+    }
 
     // The vendor accepted the audio, so it is billable whatever the recognition result.
     await recordUsage(req, session, seconds);
@@ -133,7 +138,8 @@ export default async function handler(req, res) {
       remainingSeconds: Math.max(0, Math.round((verdict.remaining ?? 0))),
     });
   } catch (e) {
-    return res.status(200).json({ ...mockResult(refText), mock: true, vendorError: "exception" });
+    console.error("[pronounce] exception:", e?.message);
+    return res.status(200).json({ ok: false, reason: "máy chấm tạm lỗi", vendorError: "exception" });
   }
 }
 
