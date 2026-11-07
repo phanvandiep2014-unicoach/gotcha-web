@@ -11,8 +11,9 @@ export const PLANS = {
   // permanent tier that costs real money every month; a one-off one turns the same spend
   // into customer-acquisition cost. See §1.1 of the pricing document.
   free: { label: "Thử", seconds: 15 * 60, window: "once" },
-  speak: { label: "Speak", seconds: 60 * 60, window: "month" },
-  speak_plus: { label: "Speak+", seconds: 120 * 60, window: "month" },
+  // 07/11/2026: 60->90 va 120->180 phut (Phan chot). Phai khop WriteRight app/api/checkout/route.ts.
+  speak: { label: "Speak", seconds: 90 * 60, window: "month" },
+  speak_plus: { label: "Speak+", seconds: 180 * 60, window: "month" },
   // Gói hội viên gộp (WriteRight + Precisely + Pass LMS), bán từ 02/11/2026.
   // Phải khớp writeright/components/PricingRoyal.tsx (45 / 90 phút mỗi tháng).
   scholar: { label: "Scholar", seconds: 45 * 60, window: "month" },
