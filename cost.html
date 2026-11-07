@@ -7,26 +7,23 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#11183A">
 <link rel="icon" href="assets/favicon-32.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prata&family=Cinzel:wght@400..900&family=EB+Garamond:ital,wght@0,400..600;1,400..600&family=Montserrat:wght@400;500;600;700&display=swap">
 <style>
-@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Regular.woff2') format('woff2');font-weight:400;font-display:swap;}
-@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;}
-@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
 :root{
   --sapphire:#11183A;--oxblood:#5A1726;--emerald:#123F33;
   --gold:#C8A14B;--gold-light:#E7CE8E;--gold-dark:#8A6A28;
   --parchment:#F4ECD8;--parchment2:#E9DCBE;--ivory:#FBF7EE;--ink:#241B10;
-  --foil:linear-gradient(135deg,#8A6A28,#E7CE8E 26%,#C8A14B 48%,#F4E7BC 66%,#A9863A 86%,#8A6A28);
-  --fh:'Trajan Pro','Cormorant Garamond',serif;--fs:'Cormorant Garamond',serif;--fb:'EB Garamond',serif;
+  --foil:linear-gradient(135deg,#C8A14B 0%,#E7CE8E 25%,#FFF8EA 48%,#E7CE8E 70%,#C8A14B 88%,#8A6A28 100%);
+  --fh:'Prata',Georgia,'Times New Roman',serif;--fu:'Montserrat','Segoe UI',Arial,sans-serif;--fs:'EB Garamond',Georgia,serif;--fb:'EB Garamond',serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--fb);color:var(--ink);background:var(--ivory);line-height:1.6}
 header{background:var(--sapphire);color:var(--parchment);display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--gold-dark)}
 header .crest{height:32px}
-.wm{font-family:var(--fh);font-weight:700;font-size:1.05rem;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.05em}
+.wm{font-family:var(--fh);font-weight:400;font-size:1.05rem;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.05em}
 .tagi{font-family:var(--fs);font-style:italic;color:var(--gold-light);font-size:.82rem}
 .spacer{flex:1}
-header a{color:var(--gold-light);font-family:var(--fh);font-size:.72rem;text-decoration:none}
+header a{color:var(--gold-light);font-family:var(--fu);font-size:.72rem;text-decoration:none}
 main{max-width:840px;margin:0 auto;padding:22px 16px 70px}
 h2{font-family:var(--fh);font-size:1.15rem;color:var(--sapphire);margin-bottom:8px}
 .card{background:var(--parchment);border:1px solid var(--gold-dark);border-radius:12px;padding:16px 18px;margin-bottom:18px}
@@ -38,11 +35,11 @@ h2{font-family:var(--fh);font-size:1.15rem;color:var(--sapphire);margin-bottom:8
 .nums b{display:block;font-family:var(--fh);font-size:1.3rem;color:var(--sapphire)}
 .nums span{font-size:.73rem;color:var(--gold-dark)}
 table{width:100%;border-collapse:collapse;font-size:.93rem;margin-top:10px}
-th{text-align:left;font-family:var(--fh);font-size:.68rem;letter-spacing:.06em;color:var(--oxblood);border-bottom:1px solid var(--gold-dark);padding:7px 5px}
+th{text-align:left;font-family:var(--fu);font-size:.68rem;letter-spacing:.06em;color:var(--oxblood);border-bottom:1px solid var(--gold-dark);padding:7px 5px}
 td{padding:8px 5px;border-bottom:1px solid var(--parchment2)}
 td.n{text-align:right;font-variant-numeric:tabular-nums}
 label.bill{display:block;margin-top:6px;font-size:.92rem}
-label.bill span{display:block;font-family:var(--fh);font-size:.68rem;letter-spacing:.07em;color:var(--oxblood);margin-bottom:5px}
+label.bill span{display:block;font-family:var(--fu);font-size:.68rem;letter-spacing:.07em;color:var(--oxblood);margin-bottom:5px}
 input,select{font-family:inherit;font-size:1rem;padding:9px 11px;border:1px solid var(--gold-dark);border-radius:8px;background:#fff;width:100%;max-width:280px}
 .verdict{margin-top:14px;padding:12px 15px;border-radius:10px;font-size:.97rem}
 .verdict.ok{background:#eef4f1;border:1px solid var(--emerald);color:var(--emerald)}
@@ -52,6 +49,7 @@ input,select{font-family:inherit;font-size:1rem;padding:9px 11px;border:1px soli
 .err{background:#fdefe0;border:1px solid var(--oxblood);border-radius:10px;padding:14px;color:var(--oxblood)}
 footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.83rem;padding:20px}
 </style>
+<script src="sso-silent.js"></script>
 </head>
 <body>
 <header>

@@ -7,19 +7,14 @@
 <meta name="description" content="Ghi âm 60 giây, nhận phản hồi song ngữ về từ vựng, ngữ pháp và nhịp nói — miễn phí. Bắt đầu từ bạn, cùng nhau vươn tới đỉnh cao.">
 <meta name="theme-color" content="#11183A">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prata&family=Cinzel:wght@400..900&family=EB+Garamond:ital,wght@0,400..600;1,400..600&family=Montserrat:wght@400;500;600;700&display=swap">
 <style>
-@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
-@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
-@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
-@font-face{font-family:'Trajan Pro';src:url('assets/TrajanPro3Black.woff2') format('woff2');font-weight:900;font-style:normal;font-display:swap;}
-
 :root{
-  --sapphire:#11183A;--sapphire-deep:#0A0E24;--oxblood:#5A1726;--oxblood-deep:#3A0E18;
+  --sapphire:#0A0E24;--sapphire-deep:#0A0E24;--sapphire-card:#11183A;--sapphire-card2:#161F48;--oxblood:#5A1726;--oxblood-deep:#3A0E18;
   --emerald:#123F33;--gold:#C8A14B;--gold-light:#E7CE8E;--gold-dark:#8A6A28;
   --parchment:#F4ECD8;--parchment2:#E9DCBE;--ivory:#FBF7EE;--ink:#241B10;
-  --foil:linear-gradient(135deg,#8A6A28,#E7CE8E 26%,#C8A14B 48%,#F4E7BC 66%,#A9863A 86%,#8A6A28);
-  --fd:'Trajan Pro','Cormorant Garamond',serif;--fh:'Trajan Pro','Cormorant Garamond',serif;--fs:'Cormorant Garamond',serif;--fb:'EB Garamond',serif;
+  --foil:linear-gradient(135deg,#C8A14B 0%,#E7CE8E 25%,#FFF8EA 48%,#E7CE8E 70%,#C8A14B 88%,#8A6A28 100%);
+  --fd:'Cinzel','Prata',Georgia,serif;--fh:'Prata',Georgia,'Times New Roman',serif;--fu:'Montserrat','Segoe UI',Arial,sans-serif;--fs:'EB Garamond',Georgia,serif;--fb:'EB Garamond',serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--fb);background:var(--ivory);color:var(--ink);line-height:1.5}
@@ -28,14 +23,14 @@ header{background:var(--sapphire);border-bottom:2px solid var(--gold-dark);paddi
 .wm{font-family:var(--fd);font-size:1.4rem;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.06em}
 .motto{font-family:var(--fs);font-style:italic;color:var(--gold-light);font-size:.8rem;opacity:.85}
 .spacer{flex:1}
-#langBtn{font-family:var(--fh);font-size:.72rem;letter-spacing:.05em;background:var(--sapphire-deep);color:var(--gold-light);border:1px solid var(--gold-dark);border-radius:6px;padding:6px 10px;cursor:pointer}
+#langBtn{font-family:var(--fu);font-size:.72rem;letter-spacing:.05em;background:var(--sapphire-deep);color:var(--gold-light);border:1px solid var(--gold-dark);border-radius:6px;padding:6px 10px;cursor:pointer}
 main{max-width:680px;margin:0 auto;padding:20px 16px 60px}
 .cueCard{background:var(--ivory);border:1px dashed var(--gold-dark);border-radius:12px;padding:16px}
-.cueCard .lbl{font-family:var(--fh);font-size:.7rem;letter-spacing:.1em;color:var(--oxblood)}
+.cueCard .lbl{font-family:var(--fu);font-size:.7rem;letter-spacing:.1em;color:var(--oxblood)}
 #cue{font-size:1.1rem;margin-top:6px}
 #hint{font-family:var(--fs);font-style:italic;color:var(--gold-dark);margin-top:8px;font-size:.95rem}
 .rec{text-align:center;margin:22px 0}
-#recBtn{width:120px;height:120px;border-radius:50%;border:4px solid var(--gold);background:var(--oxblood);color:var(--gold-light);font-family:var(--fh);font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:.2s}
+#recBtn{width:120px;height:120px;border-radius:50%;border:4px solid var(--gold);background:var(--oxblood);color:var(--gold-light);font-family:var(--fu);font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:.2s}
 #recBtn[data-state=recording]{background:var(--oxblood-deep);animation:pulse 1.2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(90,23,38,.5)}70%{box-shadow:0 0 0 20px rgba(90,23,38,0)}100%{box-shadow:0 0 0 0 rgba(90,23,38,0)}}
 #timer{font-family:var(--fh);font-size:1.8rem;color:var(--oxblood);margin-top:10px}
@@ -45,7 +40,7 @@ main{max-width:680px;margin:0 auto;padding:20px 16px 60px}
 .progress h3{font-family:var(--fh);font-size:1rem;color:var(--sapphire);margin-bottom:8px}
 .progress .dim{font-family:var(--fb);font-weight:400;color:var(--gold-dark);font-size:.8rem}
 .badges{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
-.badge{font-family:var(--fh);font-size:.68rem;letter-spacing:.03em;background:var(--sapphire);color:var(--gold-light);padding:4px 10px;border-radius:10px}
+.badge{font-family:var(--fu);font-size:.68rem;letter-spacing:.03em;background:var(--sapphire);color:var(--gold-light);padding:4px 10px;border-radius:10px}
 .pmsg{font-size:.95rem;margin:6px 0}
 .spark{margin:8px 0}
 #live{min-height:1.4em;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:1rem;margin-top:8px}
@@ -64,27 +59,27 @@ h3 .dim{font-family:var(--fb);font-size:.75rem;color:var(--gold-dark);font-weigh
 .fb .en{display:inline}
 .fb .vi{font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.92rem;margin-top:2px}
 body.no-vi .vi{display:none}
-.tag{font-family:var(--fh);font-size:.6rem;letter-spacing:.05em;background:var(--sapphire);color:var(--gold-light);padding:2px 7px;border-radius:4px;margin-right:6px}
+.tag{font-family:var(--fu);font-size:.6rem;letter-spacing:.05em;background:var(--sapphire);color:var(--gold-light);padding:2px 7px;border-radius:4px;margin-right:6px}
 .transcript{background:var(--parchment);border-radius:10px;padding:12px 14px;font-size:1rem;line-height:1.9}
 .disclaimer{font-size:.82rem;color:var(--gold-dark);font-style:italic;margin-top:16px;font-family:var(--fs)}
 .dim{color:var(--gold-dark);opacity:.85}
 .err{background:#fdefe0;border:1px solid var(--oxblood);border-radius:10px;padding:14px;color:var(--oxblood)}
-.link,.newp{font-family:var(--fh);font-size:.78rem;letter-spacing:.05em;background:transparent;border:1px solid var(--oxblood);color:var(--oxblood);border-radius:8px;padding:9px 16px;cursor:pointer;margin-top:16px}
+.link,.newp{font-family:var(--fu);font-size:.78rem;letter-spacing:.05em;background:transparent;border:1px solid var(--oxblood);color:var(--oxblood);border-radius:8px;padding:9px 16px;cursor:pointer;margin-top:16px}
 footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gold-dark);font-size:.85rem;padding:20px}
 
 /* practice vs exam mode */
 .modebar{margin-bottom:14px}
 .modes{display:inline-flex;border:1px solid var(--gold-dark);border-radius:10px;overflow:hidden}
-.mode{font-family:var(--fh);font-size:.78rem;letter-spacing:.03em;font-weight:600;background:transparent;border:0;color:var(--gold-dark);padding:9px 16px;cursor:pointer}
+.mode{font-family:var(--fu);font-size:.78rem;letter-spacing:.03em;font-weight:600;background:transparent;border:0;color:var(--gold-dark);padding:9px 16px;cursor:pointer}
 .mode.on{background:var(--foil);color:var(--sapphire)}
 .modewhy{margin-top:8px;font-size:.86rem;color:var(--gold-dark);font-family:var(--fs);font-style:italic}
 .cuetools{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
-.tool{font-family:var(--fh);font-size:.75rem;letter-spacing:.04em;font-weight:600;background:var(--ivory);border:1px solid var(--gold-dark);color:var(--oxblood);border-radius:8px;padding:7px 13px;cursor:pointer}
+.tool{font-family:var(--fu);font-size:.75rem;letter-spacing:.04em;font-weight:600;background:var(--ivory);border:1px solid var(--gold-dark);color:var(--oxblood);border-radius:8px;padding:7px 13px;cursor:pointer}
 .tool:hover{background:var(--parchment2)}
 .tool[disabled]{opacity:.55;cursor:default}
 #ideas:not(:empty){margin-top:12px;background:var(--ivory);border:1px dashed var(--gold-dark);border-radius:10px;padding:10px 14px}
 #ideas ul{margin:6px 0 0 18px;font-size:.94rem;line-height:1.8}
-#ideas .lbl2{font-family:var(--fh);font-size:.68rem;letter-spacing:.08em;color:var(--oxblood)}
+#ideas .lbl2{font-family:var(--fu);font-size:.68rem;letter-spacing:.08em;color:var(--oxblood)}
 .rec.untimed #timer{color:var(--gold-dark)}
 .rec.untimed .track{visibility:hidden}
 
@@ -102,12 +97,12 @@ footer{text-align:center;font-family:var(--fs);font-style:italic;color:var(--gol
 .utext{background:var(--parchment);border-radius:10px;padding:12px 14px;font-size:1.02rem;line-height:1.95}
 mark.up{background:linear-gradient(180deg,transparent 58%,rgba(200,161,75,.55) 58%);color:inherit;padding:0 1px;cursor:help;border-bottom:1px dotted var(--gold-dark)}
 .unote{font-size:.84rem;color:var(--gold-dark);margin-top:10px;font-family:var(--fs);font-style:italic}
-.btn-primary{font-family:var(--fh);font-size:.85rem;letter-spacing:.04em;font-weight:700;background:var(--foil);color:var(--sapphire);border:1px solid var(--gold-dark);border-radius:9px;padding:12px 22px;cursor:pointer;margin-top:14px}
+.btn-primary{font-family:var(--fu);font-size:.85rem;letter-spacing:.04em;font-weight:700;background:var(--foil);color:var(--sapphire);border:1px solid var(--gold-dark);border-radius:9px;padding:12px 22px;cursor:pointer;margin-top:14px}
 .btn-primary:hover{filter:brightness(1.07)}
 .retrycue{margin-top:16px;background:var(--ivory);border:1px dashed var(--gold);border-radius:12px;padding:14px 16px}
 .retryres{margin-top:8px}
 table.delta{width:100%;border-collapse:collapse;font-size:.95rem;margin-top:8px}
-table.delta th{text-align:left;font-family:var(--fh);font-size:.72rem;letter-spacing:.06em;color:var(--oxblood);border-bottom:1px solid var(--gold-dark);padding:6px 4px}
+table.delta th{text-align:left;font-family:var(--fu);font-size:.72rem;letter-spacing:.06em;color:var(--oxblood);border-bottom:1px solid var(--gold-dark);padding:6px 4px}
 table.delta td{padding:8px 4px;border-bottom:1px solid var(--parchment2);vertical-align:top}
 table.delta td .en2{display:block;font-size:.78rem;color:var(--gold-dark);font-style:italic;font-family:var(--fs)}
 table.delta tr.up td:last-child{color:var(--emerald);font-weight:600}
@@ -116,12 +111,13 @@ table.delta tr.flat td:last-child{color:var(--gold-dark)}
 .footnote{margin-top:14px;background:var(--parchment);border-left:4px solid var(--oxblood);border-radius:0 8px 8px 0;padding:10px 12px;font-size:.9rem;line-height:1.6}
 .footnote .dim{display:block;margin-top:4px;font-size:.82rem;font-style:italic;font-family:var(--fs)}
 
-/* Trajan Pro — balanced weight scale */
+/* Prata/Montserrat — Master Brand Kit 2026 */
 .wm{font-weight:700}
 .progress h3,.metrics .m b{font-weight:700}
 .lbl,.badge,.tag,.newp{font-weight:600}
 .upgrade h3,.retryres h3,.btn-primary{font-weight:700}
 </style>
+<script src="sso-silent.js"></script>
 </head>
 <body>
 <header>
@@ -131,7 +127,7 @@ table.delta tr.flat td:last-child{color:var(--gold-dark)}
     <div class="motto">Per te, ad astra — by UNICOACH</div>
   </div>
   <div class="spacer"></div>
-  <a href="/" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">← Trang chủ</a><a href="test" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">📝 Thi thử</a><a href="chat" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">👑 Duke</a><a href="profile" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">👤 Hồ sơ</a><button id="langBtn">VI ✓</button>
+  <a href="/" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">← Trang chủ</a><a href="test" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">📝 Thi thử</a><a href="chat" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">👑 Duke</a><a href="profile" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">👤 Hồ sơ</a><a href="/#pricing" style="font-family:var(--fh);font-size:.72rem;color:var(--gold-light);margin-right:12px">💎 Học phí</a><button id="langBtn">VI ✓</button>
 </header>
 <main>
   <div class="modebar">
@@ -160,6 +156,7 @@ table.delta tr.flat td:last-child{color:var(--gold-dark)}
   <div id="report"></div>
 </main>
 <footer>“Per te, ad astra” — bắt đầu từ bạn, cùng nhau vươn tới đỉnh cao · © 2026 UNICOACH</footer>
+<script src="ux-boost.js"></script>
 <script src="app.js"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
